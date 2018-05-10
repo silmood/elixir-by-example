@@ -19,7 +19,7 @@ defmodule Servy.Plugins do
   def log(%Conv{} = conv), do: IO.inspect conv
 
   def rewrite_path(%Conv{path: "/wildlife"} = conv) do
-    %{ conv | path: "wildthings" }
+    %{ conv | path: "/wildthings" }
   end
 
   def rewrite_path(%Conv{path: path} = conv) do
@@ -28,10 +28,10 @@ defmodule Servy.Plugins do
     rewrite_path_captures(conv, captures)
   end
 
-  def rewrite_path_captures(%Conv{} = conv, %{"thing" => thing, "id" => id}) do
+  defp rewrite_path_captures(%Conv{} = conv, %{"thing" => thing, "id" => id}) do
     %{ conv | path: "/#{thing}/#{id}"}
   end
 
-  def rewrite_path_captures(%Conv{} = conv, nil), do: conv
+  defp rewrite_path_captures(%Conv{} = conv, nil), do: conv
 
 end
