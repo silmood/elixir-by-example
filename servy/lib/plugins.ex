@@ -16,7 +16,10 @@ defmodule Servy.Plugins do
 
   def track(%Conv{} = conv), do: conv
 
-  def log(%Conv{} = conv), do: IO.inspect conv
+  def log(%Conv{} = conv) do
+    Logger.info "#{inspect conv}"
+    conv
+  end
 
   def rewrite_path(%Conv{path: "/wildlife"} = conv) do
     %{ conv | path: "/wildthings" }

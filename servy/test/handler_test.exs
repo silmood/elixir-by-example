@@ -58,6 +58,24 @@ defmodule HandlerTest do
     assert remove_whitespace(response) == remove_whitespace(expected_response)
   end
 
+  test "GET /api/bears" do
+    request = """
+    GET /bears HTTP/1.1\r
+    Host: example.com\r
+    User-Agent: ExampleBrowser/1.0\r
+    Accept: */*\r
+    \r
+    """
+
+    response = handle(request)
+
+    expected_response = """
+    HTTP/1.1 200 OK\r
+    Content-Type: application/json\r
+    Content-Length: 605
+    """
+  end
+
   test "GET /bigfoot" do
     request = """
     GET /bigfoot HTTP/1.1\r
@@ -98,6 +116,28 @@ defmodule HandlerTest do
     <p>
     Is Teddy hibernating? <strong>true</strong>
     </p>
+    """
+
+    assert remove_whitespace(response) == remove_whitespace(expected_response)
+  end
+
+  test "DELETE /bears/1" do
+    request = """
+    DELETE /bears/1 HTTP/1.1\r
+    Host: example.com\r
+    User-Agent: ExampleBrowser/1.0\r
+    Accept: */*\r
+    \r
+    """
+
+    response = handle(request)
+
+    expected_response = """
+    HTTP/1.1 403 Forbidden\r
+    Content-Type: text/html\r
+    Content-Length: 29\r
+    \r
+    Deleting a bear is forbidden!
     """
 
     assert remove_whitespace(response) == remove_whitespace(expected_response)
