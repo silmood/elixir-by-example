@@ -12,10 +12,21 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import 'phoenix_html'
+import Vue from 'vue'
+import App from './components/app.vue'
 
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-import socket from './socket'
+// Create the main component
+Vue.component('app', App)
+
+// Create the top level view model
+let app = new Vue({
+  el: '#app',
+  render (createElement) {
+    return createElement(App, {})
+  }
+})

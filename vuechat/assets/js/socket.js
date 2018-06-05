@@ -1,14 +1,7 @@
 // NOTE: The contents of this file will only be executed if
 // you uncomment its entry in "assets/js/app.js".
-
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import {Socket} from 'phoenix'
-import Vue from 'vue'
-import App from './components/app.vue'
-
-let socket = new Socket('/socket', {params: {token: window.userToken}})
-
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -52,37 +45,3 @@ let socket = new Socket('/socket', {params: {token: window.userToken}})
 //
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
-
-socket.connect()
-
-// Create the main component
-Vue.component('app', App)
-
-// Create the top level view model
-let app = new Vue({
-  el: '#app',
-  render (createElement) {
-    return createElement(App, {})
-  },
-  data () {
-    return {
-      channel: null,
-      messages: []
-    }
-  },
-  mounted () {
-    // Now that you are connected, you can join channels with a topic:
-    this.channel = socket.channel('room:lobby', {})
-
-    this.channel.on('new_msg', payload => {
-      payload.received_at = Date()
-      this.messages.push(payload)
-    })
-
-    this.channel.join()
-      .receive('ok', resp => { console.log('Joined successfully', resp) })
-      .receive('error', resp => { console.log('Unable to join', resp) })
-  }
-})
-
-export default socket

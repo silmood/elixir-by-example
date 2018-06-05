@@ -8,7 +8,7 @@ defmodule VuechatWeb.UserSocket do
   transport :websocket, Phoenix.Transports.WebSocket
   # transport :longpoll, Phoenix.Transports.LongPoll
 
-  # Socket params are passed from the client and can
+  # Socket params are passd from the client and can
   # be used to verify and authenticate a user. After
   # verification, you can put default assigns into
   # the socket that will be set for all channels, ie
@@ -19,8 +19,8 @@ defmodule VuechatWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  def connect(%{"username" => username}, socket) do
+    {:ok, assign(socket, :username, username)}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
